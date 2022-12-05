@@ -1,7 +1,11 @@
 from django.db import models
 from profiles.models import Profile
+from django.urls import reverse
 # Create your models here.
 
+
+# Modal report when we cursor our mouse to the chart!
+# That's why we made it
 
 class Report(models.Model):
     name = models.CharField(max_length=120)
@@ -11,5 +15,12 @@ class Report(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def get_absolute_url(self):
+        return reverse("reports:detail", kwargs={"pk": self.pk})
+    
+
     def __str__(self) -> str:
         return str(self.name)
+
+    class Meta:
+        ordering = ('-created',)
